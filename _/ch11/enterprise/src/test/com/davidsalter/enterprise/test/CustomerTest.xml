@@ -1,0 +1,9 @@
+<!DOCTYPE suite SYSTEM "http://beust.com/testng/testng-1.0.dtd" >
+
+<suite name="Customer Tests" verbose="2" parallel="false">
+   <test name="Customer Test">
+     <classes>
+       <class name="com.davidsalter.enterprise.test.CustomerTest"/>       
+     </classes>
+   </test>	
+</suite>

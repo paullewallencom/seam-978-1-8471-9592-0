@@ -1,0 +1,16 @@
+<m:message xmlns="http://www.w3.org/1999/xhtml"
+           xmlns:m="http://jboss.com/products/seam/mail"
+           xmlns:h="http://java.sun.com/jsf/html">
+
+    <m:from name="#{emailManager.emailDetails.fromName}" address="#{emailManager.emailDetails.from}" />
+    <m:to name="#{emailManager.emailDetails.toName}">#{emailManager.emailDetails.to}</m:to>
+    <m:subject>Here's the enterprise app.</m:subject>
+    
+    <m:body>
+        <p>Hi.  Here's the enterprise app.</p>
+        <p><a href="http://loclhost:8080/enterprise">http://localhost:8080/enterprise</a>.</p>
+        <p>Here's a picture of the app for you to look at.</p>
+        <m:attachment value="/image.png" />
+    </m:body>
+
+</m:message>

@@ -1,0 +1,12 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+
+<suite name="Calculator - All" verbose="1">
+
+
+    <test name="Calculator">
+        <packages>
+            <package name="com.davidsalter.seamcalculator.test"/>
+        </packages>
+    </test>
+
+</suite>

@@ -1,0 +1,68 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:s="http://jboss.com/products/seam/taglib"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:rich="http://richfaces.org/rich"
+                template="layout/template.xhtml">
+
+    <ui:define name="body">
+        <h:form>
+
+            <rich:panel>
+                <f:facet name="header">customerList</f:facet>
+
+                <div class="results">
+
+                    <h:outputText value="No customer exists"
+                                  rendered="#{empty customerList.resultList}"/>
+
+                    <h:dataTable id="customerList" var="customer"
+                                 value="#{customerList.resultList}"
+                                 rendered="#{not empty customerList.resultList}">
+                        <h:column>
+                            <f:facet name="header">Id</f:facet>
+                            #{customer.id}
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header"><h:outputText value="#{messages['forename']}"/></f:facet>
+                            <s:link id="customer"
+                                    value="#{customer.foreName}"
+                                    propagation="none"
+                                    view="/customer.xhtml">
+                                <f:param name="customerId"
+                                         value="#{customer.id}"/>
+                            </s:link>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header"><h:outputText value="#{messages['surname']}"/></f:facet>
+                            #{customer.secondName}
+                        </h:column>
+                    </h:dataTable>
+
+                </div>
+
+            </rich:panel>
+
+            <div class="actionButtons">
+                <s:button id="done"
+                          value="Create customer"
+                          view="/customer.xhtml"/>
+
+                <s:button id="Report"
+                          value="Generate Report"
+                          view="/customerReport.xhtml"/>
+
+                <h:commandButton id="EmailReport"
+                                 value="Email Report"
+                                 action="#{emailManager.sendEmail}"/>
+
+            </div>
+
+        </h:form>
+    </ui:define>
+
+</ui:composition>
+

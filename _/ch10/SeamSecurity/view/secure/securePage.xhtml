@@ -1,0 +1,48 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:s="http://jboss.com/products/seam/taglib"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:rich="http://richfaces.org/rich"
+                template="../layout/template.xhtml">
+
+    <ui:define name="body">
+
+        <h1>This is a secure page.</h1>
+
+        <h:outputText rendered="#{s:hasRole('admin')}">
+            You have the <i>admin</i> role.<br />
+        </h:outputText>
+
+        <h:outputText rendered="#{s:hasRole('user')}">
+            You have the <i>user</i> role.<br />
+        </h:outputText>
+
+        <h:outputText rendered="#{s:hasRole('guest')}">
+            You have the <i>guest</i> role.<br />
+        </h:outputText>
+
+        <h:form class="createUser" rendered="#{s:hasRole('admin')}">
+            <h:outputLabel for="username">Username</h:outputLabel>
+            <h:inputText id="username"
+                         value="#{user.userName}"/>
+
+
+            <p>Please answer the following question to prove that you are not a SpamBot</p>
+            <br />
+            <h:graphicImage value="/seam/resource/captcha"/>
+            <br />
+            <h:inputText id="captchaInput" value="#{captcha.response}" required="true">
+                <s:validate />
+            </h:inputText>
+
+            <br />
+            <h:message for="captchaInput"/>
+            <br />
+            <h:commandButton value="Create" action="#{newUserManager.createUser}"/>
+
+        </h:form>
+    </ui:define>
+</ui:composition>

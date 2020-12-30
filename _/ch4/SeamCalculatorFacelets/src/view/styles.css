@@ -1,0 +1,18 @@
+.body {
+	margin: 0px;
+	font-family: Arial,sans-serif;
+	color: #616161;
+}
+
+.header {
+	font-family: Arial,sans-serif;
+	text-align: left;
+	font-size: 28px;
+	margin: 20px;
+}
+
+.footer {
+	font-family: Arial,sans-serif;
+	text-align: center;
+	font-size: 10px;
+}

@@ -1,0 +1,89 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:s="http://jboss.com/products/seam/taglib"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:rich="http://richfaces.org/rich"
+                template="layout/template.xhtml">
+
+  <ui:define name="body">
+
+<f:view contentType="text/html">
+    <h1>RichFaces Demonstrator</h1>
+
+    <rich:panel header="rich:calendar">
+      <h:form id="demoForm">
+
+        <rich:calendar value="#{demo.theDate}" >
+        </rich:calendar>
+        <h:commandButton id="submitButton"
+                         value="Submit"
+                         action="#{richFacesDemo.testCalendar}" />
+
+        <h:outputText value="#{demo.theDate}"/>
+
+
+      </h:form>
+      
+    </rich:panel>
+
+    <rich:spacer height="50" />
+
+    <rich:panel header="Outer panel">
+      Some text inside the outer panel.
+      <rich:panel header="Inner panel">
+        Some text inside the inner panel.
+      </rich:panel>
+    </rich:panel>
+
+    <rich:spacer height="50" />
+
+    <rich:panel header="rich:modalPanel">
+
+<a href="#" onclick="#{rich:component('aboutPanel')}.show()">About This Application</a>
+
+      <rich:modalPanel id="aboutPanel">
+        <f:facet name="header">
+          <h:outputText value="About this application" />
+        </f:facet>
+        <p align="center">Blah, blah, I wrote this !!</p>
+        <p align="center">Copyright (c) Me 2009</p>
+        <p align="center">etc..</p>
+
+        <rich:spacer height="50" />
+        <p align="center"><a href="#" onclick="#{rich:component('aboutPanel')}.hide()">Close</a></p>
+      </rich:modalPanel>
+
+    </rich:panel>
+
+
+    <rich:spacer height="50" />
+
+    <rich:panel header="rich:simpleTogglePanel">
+      <rich:simpleTogglePanel label="rich:simpleTogglePanel example." switchType="client">
+        <p>This is a simpleTogglePanel.</p>
+        <p>You can click the arrow at the right to make this text dissapear and reapear.</p>
+      </rich:simpleTogglePanel>
+    </rich:panel>
+
+
+    <rich:spacer height="50" />
+
+    <rich:panel header="rich:simpleTogglePanel">
+      <rich:fileUpload  fileUploadListener="#{richFacesDemo.uploadListener}" maxFilesQuantity="2" acceptedTypes="html,xml" >
+      </rich:fileUpload>
+    </rich:panel>
+
+    <rich:spacer height="50" />
+
+    <rich:panel header="rich:gmap">
+      <rich:gmap style="width:500px; height:500px" lat="51.5" lng="0.0" enableContinuousZoom="true" enableInfoWindow="false">
+      </rich:gmap>
+    </rich:panel>
+
+
+</f:view>
+  </ui:define>
+</ui:composition>

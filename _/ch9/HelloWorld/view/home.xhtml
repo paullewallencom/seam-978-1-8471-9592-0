@@ -1,0 +1,46 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:s="http://jboss.com/products/seam/taglib"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:rich="http://richfaces.org/rich"
+                template="layout/template.xhtml">
+
+    <ui:define name="body">
+        <h1>Hello World</h1>
+        <s:remote include="helloWorld"/>
+
+        <script type="text/javascript">
+            function sayHelloWithArgs() {
+                var name = prompt("What's your name?");
+                if (name == null) return;
+                var callback = function(result) { document.getElementById("helloResult").innerHTML=result; };
+                Seam.Component.getInstance("helloWorld").sayHelloWithArgs(name, callback);
+                Seam.Remoting.log("This is a debug message");
+                Seam.Remoting.log("Value:"+name);
+            }
+
+            function sayHello() {
+                Seam.Remoting.loadingMessage = "Hold on a moment...";
+                Seam.Remoting.log("setting the loading message");
+                var callback = function(result) { document.getElementById("helloResult").innerHTML=result; };
+                Seam.Component.getInstance("helloWorld").sayHello(callback);
+            }
+
+            function sayHelloResponse() {
+                alert(response);
+            }
+        </script>
+        
+        <p>
+            <button onclick="javascript:sayHello()">Say Hello</button>
+            <button onclick="javascript:sayHelloWithArgs()">Say Hello with Args</button>
+        </p>
+        <p>
+            <div id="helloResult"></div>
+        </p>
+    </ui:define>
+</ui:composition>
+

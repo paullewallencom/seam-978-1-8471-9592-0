@@ -1,0 +1,31 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+                      "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:s="http://jboss.com/products/seam/taglib"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:rich="http://richfaces.org/rich"
+                template="layout/template.xhtml">
+
+<ui:define name="body">
+        <f:view>
+		<h:form>
+			<p>What type of holiday do you like?</p>
+			<h:selectOneMenu value="#{destination.destinationType}">
+				<s:selectItems value="#{destinationTypes}" var="type"
+					label="#{type.label}" noSelectionLabel="Please select" />
+				<s:convertEnum />
+			</h:selectOneMenu>
+
+			<p>What is your minimum budget?</p>
+			<h:inputText value="#{destination.minimumBudget}" />
+			<br/>
+			<h:commandButton action="#{vacationManagerAction.selectVacationType}"
+				value="Select>" />
+		</h:form>
+		</f:view>
+        <h:messages globalOnly="true" styleClass="message"/>
+
+</ui:define> 
+</ui:composition>

@@ -1,0 +1,158 @@
+<?xml version="1.0"?>
+<project name="SeamCalculator" default="deploy" basedir=".">
+    <property file="${basedir}/build.properties" />
+    <property name="project.name" value="SeamCalculator"/>
+    <property name="war.dir" value="exploded/${project.name}.war" />
+    <property name="ear.dir" value="exploded/${project.name}.ear" />
+    <property name="jar.dir" value="exploded/${project.name}.jar" />
+    <property name="test.dir" value="test-build" />
+    <property name="src.dir" value="src" />
+    <property name="src.test.dir" value="test" />
+    <property name="classes.dir" value="${war.dir}/WEB-INF/classes" />
+    <property name="view.dir" value="view" />
+    <property name="lib.dir" value="lib" />
+    <property name="dist.dir" value="dist" />
+    <property name="testng.jar" value="${basedir}/lib/testng.jar" />
+    <property name="deploy.dir" value="${jboss.home}/server/default/deploy" />
+    <fileset id="lib" dir="${lib.dir}">
+        <include name="*.jar" />
+    </fileset>
+    <path id="build.classpath">
+        <fileset refid="lib" />
+    </path>
+    <target name="init" description="Initialize">
+        <mkdir dir="exploded" />
+        <mkdir dir="${classes.dir}" />
+        <mkdir dir="${jar.dir}" />
+        <mkdir dir="${ear.dir}" />
+        <mkdir dir="${dist.dir}" />
+    </target>
+    <target name="compile" depends="init" description="Compile">
+        <javac classpathref="build.classpath"
+		       destdir="${jar.dir}">
+            <src path="${src.dir}" />
+        </javac>
+    </target>
+    <target name="jar" depends="compile"  description="Build the .jar file">
+        <copy todir="${jar.dir}">
+            <fileset dir="${basedir}/resources">
+                <include name="seam.properties" />
+            </fileset>
+        </copy>
+        <copy todir="${jar.dir}/META-INF">
+            <fileset dir="${basedir}/resources/META-INF">
+                <include name="ejb-jar.xml" />
+            </fileset>
+        </copy>
+        <copy todir="${jar.dir}/META-INF">
+            <fileset dir="${basedir}/resources/META-INF">
+                <include name="persistence.xml" />
+            </fileset>
+        </copy>
+    </target>
+    <target name="war" depends="compile" description="Assemble the exploded war file">
+        <copy todir="${war.dir}">
+            <fileset dir="${view.dir}" />
+        </copy>
+        <copy todir="${war.dir}/WEB-INF">
+            <fileset dir="${basedir}/resources/WEB-INF" >
+                <include name="*.*"/>
+            </fileset>
+            <filterset>
+                <filter token="jndiPattern" value="${project.name}/#{ejbName}/local" />
+            </filterset>
+        </copy>
+        <copy todir="${war.dir}/WEB-INF/lib">
+            <fileset dir="${lib.dir}">
+                <include name="richfaces-impl*.jar" />
+                <include name="richfaces-ui*.jar" />
+                <include name="oscache*.jar" />
+                <include name="commons-digester.jar" />
+                <include name="commons-beanutils.jar" />
+                <include name="jsf-facelets.jar" />
+                <include name="jboss-seam-*.jar" />
+                <exclude name="jboss-seam-gen.jar" />
+            </fileset>
+        </copy>
+    </target>
+    <target name="ear" description="Build the EAR">
+        <copy todir="${ear.dir}">
+            <fileset dir="${lib.dir}">
+                <include name="jboss-seam.jar" />
+            </fileset>
+            <fileset dir="${basedir}">
+                <include name="lib/jbpm*.jar" />
+                <include name="lib/jboss-el.jar" />
+                <include name="lib/drools-*.jar"/>
+                <include name="lib/core.jar"/>
+                <include name="lib/janino*.jar"/>
+                <include name="lib/antlr-*.jar"/>
+                <include name="lib/mvel*.jar"/>
+                <include name="lib/richfaces-api*.jar" />
+            </fileset>
+        </copy>
+        <copy todir="${ear.dir}/META-INF">
+            <fileset dir="${basedir}/resources/META-INF">
+                <include name="application.xml" />
+                <include name="jboss-app.xml" />
+            </fileset>
+        </copy>
+    </target>
+    <target name="archive" depends="jar,war,ear" description="Create the .WAR, .JAR and .EAR files">
+        <jar jarfile="${dist.dir}/${project.name}.war" basedir="${war.dir}" />
+        <jar jarfile="${dist.dir}/${project.name}.jar" basedir="${jar.dir}"/>
+        <jar jarfile="${dist.dir}/${project.name}.ear">
+            <fileset dir="${ear.dir}"/>
+            <fileset dir="${dist.dir}">
+                <include name="${project.name}.jar"/>
+                <include name="${project.name}.war"/>
+            </fileset>
+        </jar>
+    </target>
+    <target name="compile.test" description="Compile the tests">
+        <mkdir dir="${test.dir}"/>
+        <javac classpathref="build.classpath"
+                        destdir="${test.dir}">
+            <src path="${src.dir}" />
+            <src path="${src.test.dir}" />
+        </javac>
+        <copy todir="${test.dir}" flatten="true">
+            <fileset dir="${src.test.dir}">
+                <include name="**/*Test.xml" />
+            </fileset>
+        </copy>
+    </target>
+    <target name="test" depends="compile.test" description="Run the tests">
+        <taskdef resource="testngtasks" classpath="${testng.jar}" />
+        <path id="test.path">
+            <path path="${test.dir}" />
+            <path refid="build.classpath" />
+        </path>
+        <testng outputdir="${basedir}/test-report">
+            <classpath refid="test.path" />
+            <xmlfileset dir="${test.dir}" includes="*Test.xml" />
+        </testng>
+    </target>
+    <target name="deploy" depends="archive" description="Deploy the EAR file">
+        <copy todir="${deploy.dir}" file="${dist.dir}/${project.name}.ear" />
+    </target>
+    <target name="undeploy" description="Undeploy the application.">
+        <delete file="${deploy.dir}/${project.name}.ear" />
+    </target>
+    <target name="clean" description="Clean the project">
+        <delete dir="${dist.dir}"/>
+        <delete dir="${war.dir}"/>
+        <delete dir="${ear.dir}"/>
+        <delete dir="${jar.dir}"/>
+        <delete dir="exploded"/>
+        <delete dir="${test.dir}"/>
+    </target>
+    <target name="info" description="Display build information.">
+        <echo message="info     - display this information."/>
+        <echo message="archive  - Build the .war and .ear files for deployment to the app. server."/>
+        <echo message="clean    - Clean up the build directories."/>
+        <echo message="deploy   - Deploy the application to the app. server."/>
+        <echo message="test     - Run the application unit tests."/>
+        <echo message="undeploy - Undeploy the application from the app. server."/>
+    </target>
+</project>

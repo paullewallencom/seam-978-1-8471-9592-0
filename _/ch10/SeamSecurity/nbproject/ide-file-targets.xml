@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project basedir=".." name="SeamSecurity-IDE">
+    
+  <property file="nbproject/debug-jboss.properties"/>
+
+  <target name="debug-nb">
+    <nbjpdaconnect name="SeamSecurity" host="${jpda.host}" address="${jpda.address}" transport="${jpda.transport}">
+      <!--classpath>
+        <path path="exploded-archives/SeamSecurity.jar"/>
+      </classpath>
+      <sourcepath>
+        <path path="src"/>
+      </sourcepath-->
+    </nbjpdaconnect>
+  </target>
+</project>

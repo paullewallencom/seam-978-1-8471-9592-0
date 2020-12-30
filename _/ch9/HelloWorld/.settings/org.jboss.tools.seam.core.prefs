@@ -1,0 +1,16 @@
+#Wed Aug 06 19:35:32 BST 2008
+action.package=com.davidsalter.helloworld
+action.sources=/HelloWorld/src/hot
+eclipse.preferences.version=1
+model.package=com.davidsalter.helloworld
+model.sources=/HelloWorld/src/main
+seam.ejb.project=HelloWorld
+seam.project.connection.profile=
+seam.project.deployment.type=ear
+seam.project.settings.version=1.1
+seam.project.web.root.folder=/HelloWorld/view
+seam.runtime.name=
+seam.test.creating=true
+seam.test.project=HelloWorld
+test.package=com.davidsalter.helloworld
+test.sources=/HelloWorld/src/test

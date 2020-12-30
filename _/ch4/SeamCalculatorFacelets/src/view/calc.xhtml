@@ -1,0 +1,26 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      template="template.xhtml">>
+      
+      <p>This is our first Seam application using Facelets.</p>
+      <ui:define name="body">
+      <f:view>
+         <h:form>
+               <h:panelGrid columns="2">
+                  Value 1: <h:inputText value="#{calculator.value1}" />
+                  Value 2: <h:inputText value="#{calculator.value2}" />
+                  Add them together gives: <h:outputText value="#{calculator.answer}"/>
+               </h:panelGrid>
+            <h:commandButton value="Add" action="#{calcAction.calculate}"/>
+         </h:form>
+      </f:view>
+      </ui:define>
+
+      <ui:define name="footer">
+        Seam Facelets Application
+      </ui:define>
+</ui:composition>

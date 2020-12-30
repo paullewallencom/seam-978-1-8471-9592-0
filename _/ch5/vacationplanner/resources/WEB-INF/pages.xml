@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pages xmlns="http://jboss.com/products/seam/pages"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://jboss.com/products/seam/pages http://jboss.com/products/seam/pages-2.1.xsd">
+
+	<page view-id="/vacations.xhtml"
+		action="#{vacationManagerAction.beforeRender}">
+	</page>
+
+ 	<page view-id="/vacations.xhtml">
+		<navigation from-action="#{vacationManagerAction.selectVacationType}">
+			<rule if="#{destination.minimumBudget lt 100.0}">
+				<redirect view-id="/insufficientfunds.xhtml" />
+			</rule>
+			<rule if-outcome="danger">
+				<redirect view-id="/danger.xhtml" />
+			</rule>
+			<rule if-outcome="city">
+				<redirect view-id="/city.xhtml" />
+			</rule>
+			<rule if-outcome="beach">
+				<redirect view-id="/beach.xhtml" />
+			</rule>
+		</navigation>
+	</page>
+         
+    <exception class="java.lang.Exception">
+        <redirect view-id="/error.xhtml">
+            <message severity="ERROR">
+            Whoops.  Better make sure we write some better tests !
+            </message>
+        </redirect>
+    </exception>
+
+    <page view-id="*">
+        <navigation>
+            <rule if-outcome="home">
+                <redirect view-id="/home.xhtml"/>
+            </rule>
+        </navigation>
+    </page> 
+
+</pages>

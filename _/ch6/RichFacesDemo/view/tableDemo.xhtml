@@ -1,0 +1,41 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:s="http://jboss.com/products/seam/taglib"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:rich="http://richfaces.org/rich"
+                template="layout/template.xhtml">
+
+  <ui:define name="body">
+
+    <f:view contentType="text/html">
+      <h1>RichFaces Table Demonstrator</h1>
+
+      <rich:panel header="rich:dataTable">
+
+        <h:form>
+          <rich:dataTable id="myTable" value="#{countries}" var="country" rows="5">
+            <f:facet name="header">Country vs Capital vs Population</f:facet>
+            <rich:column sortBy="#{country.name}">
+              <f:facet name="header">Country</f:facet>
+              <h:outputText value="#{country.name}" />
+            </rich:column>
+            <rich:column sortBy="#{country.capital}">
+              <f:facet name="header">Capital</f:facet>
+              <h:outputText value="#{country.capital}" />
+            </rich:column>
+            <rich:column sortBy="#{country.population}">
+              <f:facet name="header">Population</f:facet>
+              <h:outputText value="#{country.population}" />
+            </rich:column>
+            <f:facet name="footer"><rich:datascroller id="myDataScroller"></rich:datascroller></f:facet>
+          </rich:dataTable>
+        </h:form>
+      </rich:panel>
+
+
+    </f:view>
+  </ui:define>
+</ui:composition>

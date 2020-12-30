@@ -1,0 +1,16 @@
+#Wed Aug 06 19:35:32 BST 2008
+action.package=com.davidsalter.data.actions
+action.sources=/Data/src/action
+eclipse.preferences.version=1
+model.package=com.davidsalter.data.entity
+model.sources=/Data/src/model
+seam.ejb.project=Data
+seam.project.connection.profile=
+seam.project.deployment.type=ear
+seam.project.settings.version=1.1
+seam.project.web.root.folder=/Data/view
+seam.runtime.name=
+seam.test.creating=true
+seam.test.project=Data
+test.package=com.davidsalter.data.actions.test
+test.sources=/Data/src/test

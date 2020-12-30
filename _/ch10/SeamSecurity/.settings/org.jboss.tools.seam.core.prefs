@@ -1,0 +1,16 @@
+#Fri Apr 03 23:58:38 BST 2009
+action.package=com.davidsalter.seamsecurity
+action.sources=/SeamSecurity/src/hot
+eclipse.preferences.version=1
+model.package=com.davidsalter.seamsecurity.entity
+model.sources=/SeamSecurity/src/main
+seam.ejb.project=SeamSecurity
+seam.project.connection.profile=
+seam.project.deployment.type=ear
+seam.project.settings.version=1.1
+seam.project.web.root.folder=/SeamSecurity/view
+seam.runtime.name=jboss-seam-2.1.1.GA
+seam.test.creating=true
+seam.test.project=SeamSecurity
+test.package=com.davidsalter.seamsecurity.test
+test.sources=/SeamSecurity/src/test
